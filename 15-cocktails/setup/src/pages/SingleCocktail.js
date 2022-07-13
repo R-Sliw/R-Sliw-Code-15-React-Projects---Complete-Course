@@ -22,7 +22,7 @@ const SingleCocktail = () => {
           strDrinkThumb: image,
           strAlcoholic: info,
           strCategory: category,
-          strGlasS: glass,
+          strGlass: glass,
           strInstructions: instructions,
           strIngredient1: item1,
           strIngredient2: item2,
@@ -30,7 +30,11 @@ const SingleCocktail = () => {
           strIngredient4: item4,
           strIngredient5: item5,
         } = data.drinks[0];
-        const ingredients = [item1, item3, item2, item4, item5];
+        const ingredients = [item1, item3, item2, item4, item5]
+          .filter((n) => n)
+          .join(",/")
+          .concat(".")
+          .split("/");
         const newCocktail = {
           name,
           image,
@@ -96,14 +100,7 @@ const SingleCocktail = () => {
           <p>
             <span className="drink-data">ingredients :</span>
             {ingredients.map((ing, index) => {
-              let result;
-              if (ing) {
-                result = <span key={index}>{`${ing},`}</span>;
-                if (ingredients.length - 2 === index) {
-                  result = result.props.children.replace(",", ".");
-                }
-              }
-              return result;
+              return <span key={index}>{ing}</span>;
             })}
           </p>
         </div>
